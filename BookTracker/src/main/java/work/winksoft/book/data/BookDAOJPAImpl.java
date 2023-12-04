@@ -12,10 +12,10 @@ import work.winksoft.book.entities.Book;
 @Transactional
 @Service
 public class BookDAOJPAImpl implements BookDAO {
-	
+
 	@PersistenceContext
 	private EntityManager em;
-	
+
 	@Override
 	public List<Book> getAllBooks() {
 		String psql = "SELECT book FROM Book book";
@@ -25,27 +25,49 @@ public class BookDAOJPAImpl implements BookDAO {
 
 	@Override
 	public Book findByID(int bookId) {
-		// TODO Auto-generated method stub
-		return null;
+		String psql = "SELECT book FROM Book book WHERE id = :Id";
+		List<Book> book = em.createQuery(psql, Book.class).setParameter("Id", bookId).getResultList();
+		if (book.isEmpty()) {
+			return null;
+		} else {
+			return book.get(0);
+		}
 	}
 
 	@Override
 	public Book create(Book book) {
-		// TODO Auto-generated method stub
-		return null;
+
+		em.persist(book);
+		em.flush();
+
+		return book;
 	}
 
 	@Override
 	public Book update(int bookId, Book book) {
-		// TODO Auto-generated method stub
-		return null;
+
+		Book bookToUpdate = em.find(Book.class, bookId);
+		bookToUpdate.setName(book.getName());
+		bookToUpdate.setSynopsis(book.getSynopsis());
+		bookToUpdate.setDateReleased(book.getDateReleased());
+		bookToUpdate.setSeries(book.getSeries());
+		bookToUpdate.setNumInSeries(book.getNumInSeries());
+		bookToUpdate.setComplete(book.getComplete());
+		bookToUpdate.setImageURL(book.getImageURL());
+
+		return bookToUpdate;
 	}
 
 	@Override
 	public boolean deleteById(int bookId) {
-		// TODO Auto-generated method stub
-		return false;
+		Book bookToRemove = em.find(Book.class, bookId);
+		if (bookToRemove != null) {
+
+			em.remove(em.find(Book.class, bookId));
+
+			return true;
+		} else {
+			return false;
+		}
 	}
-	
-	
 }

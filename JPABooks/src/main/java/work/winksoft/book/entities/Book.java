@@ -1,6 +1,7 @@
 package work.winksoft.book.entities;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -17,7 +18,7 @@ public class Book {
 	private String name;
 	private String synopsis;
 	@Column(name = "date_released")
-	private LocalDateTime dateReleased;
+	private Date dateReleased;
 	@Column(name = "is_series")
 	private Boolean series;
 	@Column(name = "number_in_series")
@@ -53,35 +54,35 @@ public class Book {
 		this.synopsis = synopsis;
 	}
 
-	public LocalDateTime getDateReleased() {
+	public Date getDateReleased() {
 		return dateReleased;
 	}
 
-	public void setDateReleased(LocalDateTime dateReleased) {
-		this.dateReleased = dateReleased;
+	public void setDateReleased(Date parsed) {
+		this.dateReleased = parsed;
 	}
 
-	public boolean isSeries() {
+	public Boolean getSeries() {
 		return series;
 	}
 
-	public void setSeries(boolean series) {
+	public void setSeries(Boolean series) {
 		this.series = series;
 	}
 
-	public int getNumInSeries() {
+	public Integer getNumInSeries() {
 		return numInSeries;
 	}
 
-	public void setNumInSeries(int numInSeries) {
+	public void setNumInSeries(Integer numInSeries) {
 		this.numInSeries = numInSeries;
 	}
 
-	public boolean isComplete() {
+	public Boolean getComplete() {
 		return complete;
 	}
 
-	public void setComplete(boolean complete) {
+	public void setComplete(Boolean complete) {
 		this.complete = complete;
 	}
 
@@ -112,9 +113,26 @@ public class Book {
 
 	@Override
 	public String toString() {
-		return "Book [id=" + id + ", name=" + name + ", synopsis=" + synopsis + ", dateReleased=" + dateReleased
-				+ ", series=" + series + ", numInSeries=" + numInSeries + ", complete=" + complete + ", imageURL="
-				+ imageURL + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("Book [id=");
+		builder.append(id);
+		builder.append(", name=");
+		builder.append(name);
+		builder.append(", synopsis=");
+		builder.append(synopsis);
+		builder.append(", dateReleased=");
+		builder.append(dateReleased);
+		builder.append(", series=");
+		builder.append(series);
+		builder.append(", numInSeries=");
+		builder.append(numInSeries);
+		builder.append(", complete=");
+		builder.append(complete);
+		builder.append(", imageURL=");
+		builder.append(imageURL);
+		builder.append("]");
+		return builder.toString();
 	}
 
+	
 }
