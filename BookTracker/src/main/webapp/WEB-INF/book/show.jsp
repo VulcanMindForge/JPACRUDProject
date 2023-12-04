@@ -18,16 +18,15 @@
 			</div>
 		</c:if>
 		<c:choose>
-		<c:when test="${book == null}">
-			<c:if test="${action eq 'display'}">
+			<c:when test="${book == null}">
+				<c:if test="${action eq 'display'}">
 					<h1 class="text-center">No book found with that ID!</h1>
-			</c:if>
-		</c:when>
+				</c:if>
+			</c:when>
 		</c:choose>
-		
-		<form class="form" action="editBook.do" method="GET" id="editBook">
-			<c:if test="${book != null}">
-				<ul>
+		<div class="container">
+			<form class="form" action="editBook.do" method="GET" id="editBook">
+				<ul class = "list">
 					<li>
 						<h4>ID:</h4> <c:choose>
 							<c:when test="${action == 'Edit'}">${book.id}
@@ -112,8 +111,10 @@
 						<h4>Series complete:</h4> <c:choose>
 							<c:when test="empty ${book.series}">Completion state not updated.</c:when>
 							<c:when test="${(action eq 'Edit') || (action eq 'Add')}">
+								<label for="Yes">Yes</label>
 								<input type="checkbox" form="editBook" name="bookComplete"
 									value="true" id="Yes">
+								<label for="No">No</label>
 								<input type="checkbox" form="editBook" name="bookComplete"
 									value="false" id="No">
 							</c:when>
@@ -132,7 +133,6 @@
 						</c:choose>
 					</li>
 				</ul>
-
 				<c:choose>
 					<c:when test="${action eq 'display'}">
 						<button type="submit" name="action" value="Edit"
@@ -160,10 +160,9 @@
 							formaction="deleteBook.do?bookId=${book.id}">Confirm
 							Delete</button>
 					</c:when>
-
 				</c:choose>
-			</c:if>
-		</form>
+			</form>
+		</div>
 	</div>
 	<%@ include file="../includes/footer.jsp"%>
 </body>
